@@ -26,5 +26,4 @@ NEWS4U is a modern, real-time news aggregator that brings you the latest headlin
 - **NewsAPI** - Real-time news data
 - **Font Awesome** - Icons and visual elements
 - **LocalStorage/SessionStorage** - User data management
-
-## 📁 Project Structure
+  
