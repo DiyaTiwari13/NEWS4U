@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEWS4U - Real-Time News Aggregator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Header Styles */
+        .header {
+            background: white;
+            padding: 15px 0;
+            border-bottom: 3px solid #2196f3;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #2196f3;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .logo-text h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .logo-text h1 span {
+            color: #2196f3;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        .nav-links a.active {
+            background: #2196f3;
+            color: white;
+        }
+
+        /* User Menu Styles */
+        .user-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-name {
+            background: #e3f2fd;
+            color: #2196f3;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .user-name i {
+            font-size: 16px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 220px;
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-header {
+            padding: 15px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-header h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .dropdown-header p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f5f5;
+            color: #2196f3;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            color: #2196f3;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #eee;
+            margin: 5px 0;
+        }
+
+        .logout-item {
+            color: #f44336;
+        }
+
+        .logout-item i {
+            color: #f44336;
+        }
+
+        .logout-item:hover {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .btn-login {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        /* Thoughts Section */
+        .thoughts-section {
+            margin: 40px 0;
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            padding: 40px;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.3);
+        }
+
+        .thoughts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .thoughts-header h2 {
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .refresh-thoughts {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .refresh-thoughts:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .thought-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .quote-icon {
+            font-size: 32px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .thought-text {
+            font-size: 22px;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .thought-author {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Smaller Thoughts Section */
+        .thoughts-section {
+            margin: 20px 0 30px;
+            padding: 20px 25px;
+            border-radius: 15px;
+        }
+
+        .thoughts-header h2 {
+            font-size: 20px;
+        }
+
+        .thought-card {
+            padding: 20px;
+        }
+
+        .thought-text {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .thought-author {
+            font-size: 14px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.05), rgba(25, 118, 210, 0.05));
+            border-radius: 15px;
+        }
+
+        .welcome-message h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome-message h1 span {
+            color: #2196f3;
+            font-weight: 700;
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .welcome-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .welcome-features span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+            font-size: 15px;
+            background: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .welcome-features i {
+            color: #2196f3;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Blue Overlay -->
+    <div class="blue-overlay"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- LOGO -->
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>NEWS<span>4U</span></h1>
+                        <p class="tagline">Real-Time News Aggregator</p>
+                    </div>
+                </div>
+
+                <!-- NAVIGATION -->
+                <nav class="main-nav">
+                    <ul class="nav-links">
+                        <li><a href="#" class="active"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-fire"></i> Trending</a></li>
+                    </ul>
+                </nav>
+
+                <!-- USER SECTION -->
+                <div class="user-section">
+                    <a href="login.html" class="btn-login" id="loginBtn">
+                        <i class="fas fa-user"></i> Login/Signup
+                    </a>
+
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <button class="user-name" id="userNameBtn">
+                            <i class="fas fa-user-circle"></i>
+                            <span id="displayName">User</span>
+                            <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                        </button>
+
+                        <div class="dropdown-menu" id="dropdownMenu">
+                            <div class="dropdown-header">
+                                <h4 id="dropdownName">User</h4>
+                                <p id="dropdownEmail">user@example.com</p>
+                            </div>
+
+                            <button class="dropdown-item" id="profileBtn">
+                                <i class="fas fa-user-circle"></i>
+                                My Profile
+                            </button>
+
+                            <button class="dropdown-item" id="changePasswordBtn">
+                                <i class="fas fa-key"></i>
+                                Change Password
+                            </button>
+
+                            <button class="dropdown-item" id="savedArticlesBtn">
+                                <i class="fas fa-bookmark"></i>
+                                Saved Articles
+                            </button>
+
+                            <div class="dropdown-divider"></div>
+
+                            <button class="dropdown-item logout-item" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-guest" id="heroGuest">
+                <h1 class="hero-title">Stay Informed with <span class="gradient-text">Real-Time</span> News</h1>
+                <p class="hero-subtitle">Get personalized news from around the world. Login to unlock all features!</p>
+
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="mainSearch" placeholder="Search for news...">
+                    <button class="search-btn" id="searchButton" disabled>
+                        <i class="fas fa-lock"></i> Login to Search
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-user hidden" id="heroUser">
+                <div class="welcome-message">
+                    <h1>Welcome back, <span id="userNameDisplay">User</span>! 👋</h1>
+                    <p class="welcome-subtitle">Explore what's happening in your world today</p>
+                    <div class="welcome-features">
+                        <span><i class="fas fa-newspaper"></i> Latest News</span>
+                        <span><i class="fas fa-fire"></i> Trending Topics</span>
+                        <span><i class="fas fa-video"></i> Breaking Stories</span>
+                    </div>
+                </div>
+
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="userSearch"
+                        placeholder="Search news, topics, categories...">
+                    <button class="search-btn" id="userSearchBtn"><i class="fas fa-search"></i> Search</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="thoughts-section hidden" id="thoughtsSection">
+            <div class="thoughts-header">
+                <h2><i class="fas fa-quote-right"></i> Thought of the Day</h2>
+                <button class="refresh-thoughts" id="refreshThoughts">
+                    <i class="fas fa-sync-alt"></i> New
+                </button>
+            </div>
+            <div class="thoughts-container">
+                <div class="thought-card">
+                    <p class="thought-text" id="thoughtText">Loading inspiring thoughts...</p>
+                    <div class="thought-author" id="thoughtAuthor">— Unknown</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORIES GRID -->
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">Browse <span>Categories</span></h2>
+                <div class="categories-grid"></div>
+            </div>
+        </section>
+
+        <!-- NEWS SECTION -->
+        <section class="news-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">📰 Latest <span>News</span></h2>
+                    <div class="section-controls">
+                        <select class="category-select" id="categorySelect">
+                            <option value="general">All Categories</option>
+                            <option value="business">Business</option>
+                            <option value="sports">Sports</option>
+                            <option value="technology">Technology</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="health">Health</option>
+                        </select>
+                        <button class="btn-refresh" id="refreshNews">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="news-grid" id="newsGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NEWS4U</h3>
+                    <p>Real-Time News Aggregator</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NEWS4U</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/Auth.js"></script>
+    <script src="js/News.js"></script>
+    <script src="js/Thoughts.js"></script>
+    <script src="js/Main.js"></script>
+</body>
+
+</html>

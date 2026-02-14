@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - NEWS4U</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 0;
+            border-bottom: 3px solid #2196f3;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #2196f3;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .logo-text h1 {
+            font-size: 28px;
+            color: #333;
+        }
+
+        .logo-text h1 span {
+            color: #2196f3;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .btn-home {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .profile-cover {
+            height: 150px;
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            position: relative;
+        }
+
+        .profile-avatar {
+            position: absolute;
+            bottom: -50px;
+            left: 50px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid white;
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            padding: 70px 50px 40px 50px;
+        }
+
+        .profile-name {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .profile-email {
+            color: #666;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-meta {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-item i {
+            font-size: 24px;
+            color: #2196f3;
+        }
+
+        .meta-item h4 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .meta-item p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Tabs */
+        .profile-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid #eee;
+            padding: 0 50px;
+        }
+
+        .tab-btn {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #2196f3;
+            border-bottom-color: #2196f3;
+        }
+
+        .tab-content {
+            padding: 30px 50px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .info-item label {
+            display: block;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn-edit {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Saved Articles */
+        .saved-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .saved-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .saved-item h4 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .saved-item p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .btn-remove {
+            background: none;
+            border: none;
+            color: #f44336;
+            cursor: pointer;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .btn-remove:hover {
+            background: #ffebee;
+            border-radius: 8px;
+        }
+
+        /* Change Password */
+        .password-form {
+            max-width: 400px;
+        }
+
+        .password-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .password-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .password-form input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .password-form input:focus {
+            border-color: #2196f3;
+            outline: none;
+        }
+
+        .btn-save {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-save:hover {
+            background: #1976d2;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 50px;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #b0bec5;
+        }
+
+        @media (max-width: 768px) {
+            .profile-info {
+                padding: 70px 20px 30px;
+            }
+            
+            .profile-tabs {
+                padding: 0 20px;
+                overflow-x: auto;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-meta {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='index.html'">
+                    <div class="logo-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>NEWS<span>4U</span></h1>
+                        <p class="tagline">Real-Time News Aggregator</p>
+                    </div>
+                </div>
+                <a href="index.html" class="btn-home">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="profile-card">
+            <div class="profile-cover">
+                <div class="profile-avatar" id="avatarContainer">
+                    <img src="" alt="Profile Avatar" id="profileAvatar">
+                </div>
+            </div>
+            
+            <div class="profile-info">
+                <h1 class="profile-name" id="profileName">Loading...</h1>
+                <p class="profile-email" id="profileEmail">
+                    <i class="fas fa-envelope"></i> loading...
+                </p>
+                
+                <div class="profile-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <h4 id="memberDays">0</h4>
+                            <p>Days Active</p>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-bookmark"></i>
+                        <div>
+                            <h4 id="savedCount">0</h4>
+                            <p>Saved Articles</p>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-heart"></i>
+                        <div>
+                            <h4 id="likedCount">0</h4>
+                            <p>Liked Articles</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="profile-tabs">
+                <button class="tab-btn active" data-tab="info">
+                    <i class="fas fa-user"></i> Personal Info
+                </button>
+                <button class="tab-btn" data-tab="saved">
+                    <i class="fas fa-bookmark"></i> Saved Articles
+                </button>
+                <button class="tab-btn" data-tab="password">
+                    <i class="fas fa-key"></i> Change Password
+                </button>
+            </div>
+
+            <!-- Tab: Personal Info -->
+            <div class="tab-content active" id="tabInfo">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Full Name</label>
+                        <p id="infoName">Loading...</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Email Address</label>
+                        <p id="infoEmail">loading...</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Member Since</label>
+                        <p id="infoJoined">loading...</p>
+                    </div>
+                    <div class="info-item">
+                        <label>User ID</label>
+                        <p id="infoUserId">loading...</p>
+                    </div>
+                </div>
+                <!-- <button class="btn-edit" id="editProfileBtn">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </button> -->
+            </div>
+
+            <!-- Tab: Saved Articles -->
+            <div class="tab-content" id="tabSaved">
+                <div id="savedArticlesList" class="saved-list">
+                    <div class="empty-state">
+                        <i class="fas fa-bookmark"></i>
+                        <h3>No saved articles yet</h3>
+                        <p>Start saving articles to read them later!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Change Password -->
+            <div class="tab-content" id="tabPassword">
+                <div class="password-form">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" id="currentPassword" placeholder="Enter current password">
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" id="newPassword" placeholder="Enter new password (min 6 chars)">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                    </div>
+                    <button class="btn-save" id="savePasswordBtn">
+                        <i class="fas fa-save"></i> Update Password
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 NEWS4U - Real-Time News Aggregator</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Profile Manager
+        class ProfileManager {
+            constructor() {
+                this.loadUserData();
+                this.setupEventListeners();
+            }
+
+            loadUserData() {
+                const userData = localStorage.getItem('news4u_user');
+                
+                if (!userData) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                try {
+                    const user = JSON.parse(userData);
+                    this.displayUserData(user);
+                    this.loadStats();
+                } catch (e) {
+                    window.location.href = 'login.html';
+                }
+            }
+
+            displayUserData(user) {
+                // Update all name fields
+                const nameFields = ['profileName', 'infoName'];
+                nameFields.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = user.name || 'User';
+                });
+
+                // Update email fields
+                const emailFields = ['profileEmail', 'infoEmail'];
+                emailFields.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        if (id === 'profileEmail') {
+                            el.innerHTML = `<i class="fas fa-envelope"></i> ${user.email || 'user@example.com'}`;
+                        } else {
+                            el.textContent = user.email || 'user@example.com';
+                        }
+                    }
+                });
+
+                // Update avatar
+                const avatar = document.getElementById('profileAvatar');
+                if (avatar) {
+                    avatar.src = user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'User')}&background=2196f3&color=fff`;
+                }
+
+                // Member since
+                if (user.joinedDate) {
+                    const joined = new Date(user.joinedDate);
+                    const formattedDate = joined.toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    
+                    const joinedEl = document.getElementById('infoJoined');
+                    if (joinedEl) joinedEl.textContent = formattedDate;
+
+                    // Days active
+                    const daysActive = Math.floor((new Date() - joined) / (1000 * 60 * 60 * 24));
+                    const daysEl = document.getElementById('memberDays');
+                    if (daysEl) daysEl.textContent = daysActive || 1;
+                }
+
+                // User ID
+                const userIdEl = document.getElementById('infoUserId');
+                if (userIdEl) {
+                    userIdEl.textContent = user.id || 'N/A';
+                }
+            }
+
+            loadStats() {
+                const saved = JSON.parse(localStorage.getItem('saved_articles') || '[]');
+                const savedCountEl = document.getElementById('savedCount');
+                if (savedCountEl) savedCountEl.textContent = saved.length;
+
+                const liked = JSON.parse(localStorage.getItem('liked_articles') || '[]');
+                const likedCountEl = document.getElementById('likedCount');
+                if (likedCountEl) likedCountEl.textContent = liked.length;
+
+                this.loadSavedArticles(saved);
+            }
+
+            loadSavedArticles(savedArticles) {
+                const container = document.getElementById('savedArticlesList');
+                if (!container) return;
+
+                if (savedArticles.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-bookmark"></i>
+                            <h3>No saved articles yet</h3>
+                            <p>Start saving articles to read them later!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                savedArticles.slice(0, 10).forEach(article => {
+                    html += `
+                        <div class="saved-item">
+                            <div>
+                                <h4>${article.title || 'Untitled Article'}</h4>
+                                <p><i class="far fa-clock"></i> Saved ${this.timeAgo(article.savedAt)}</p>
+                            </div>
+                            <button class="btn-remove" onclick="ProfileManager.removeSaved('${article.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            }
+
+            static removeSaved(articleId) {
+                const saved = JSON.parse(localStorage.getItem('saved_articles') || '[]');
+                const updated = saved.filter(a => a.id !== articleId);
+                localStorage.setItem('saved_articles', JSON.stringify(updated));
+                window.location.reload();
+            }
+
+            timeAgo(timestamp) {
+                if (!timestamp) return 'recently';
+                
+                const seconds = Math.floor((new Date() - new Date(timestamp)) / 1000);
+                
+                if (seconds < 60) return 'just now';
+                const minutes = Math.floor(seconds / 60);
+                if (minutes < 60) return `${minutes} min ago`;
+                const hours = Math.floor(minutes / 60);
+                if (hours < 24) return `${hours} hours ago`;
+                const days = Math.floor(hours / 24);
+                if (days < 7) return `${days} days ago`;
+                return 'long ago';
+            }
+
+            setupEventListeners() {
+                // Tab switching
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                        
+                        btn.classList.add('active');
+                        
+                        const tabName = btn.dataset.tab;
+                        const content = document.getElementById(`tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`);
+                        if (content) content.classList.add('active');
+                    });
+                });
+
+                // Edit profile button
+                document.getElementById('editProfileBtn')?.addEventListener('click', () => {
+                    alert('Edit profile feature coming soon!');
+                });
+
+                // Change password
+                document.getElementById('savePasswordBtn')?.addEventListener('click', () => {
+                    const current = document.getElementById('currentPassword').value;
+                    const newPass = document.getElementById('newPassword').value;
+                    const confirm = document.getElementById('confirmPassword').value;
+
+                    if (!current || !newPass || !confirm) {
+                        alert('Please fill all fields');
+                        return;
+                    }
+
+                    if (newPass !== confirm) {
+                        alert('New passwords do not match');
+                        return;
+                    }
+
+                    if (newPass.length < 6) {
+                        alert('Password must be at least 6 characters');
+                        return;
+                    }
+
+                    // Verify current password
+                    const users = JSON.parse(localStorage.getItem('news4u_users') || '[]');
+                    const userData = JSON.parse(localStorage.getItem('news4u_user') || '{}');
+                    const user = users.find(u => u.id === userData.id);
+
+                    if (!user || user.password !== current) {
+                        alert('Current password is incorrect');
+                        return;
+                    }
+
+                    // Update password
+                    user.password = newPass;
+                    localStorage.setItem('news4u_users', JSON.stringify(users));
+                    
+                    alert('Password changed successfully!');
+                    
+                    // Clear fields
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                });
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            new ProfileManager();
+        });
+    </script>
+</body>
+</html>

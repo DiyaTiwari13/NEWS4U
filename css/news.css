@@ -1,0 +1,528 @@
+/* ====== News Card Styles ====== */
+.news-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(33, 150, 243, 0.15);
+}
+
+.news-card.featured {
+    grid-column: span 2;
+}
+
+.news-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.news-card:hover .news-image {
+    transform: scale(1.05);
+}
+
+.news-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 6px 15px;
+    background: linear-gradient(135deg, #2196f3, #21cbf3);
+    color: white;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.news-content {
+    padding: 25px;
+}
+
+.news-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    /* Remove -webkit-line-clamp error by using standard property */
+    max-height: 2.8em;
+}
+
+.news-description {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 4.8em;
+}
+
+.news-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.news-source {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.source-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.news-time {
+    color: #888;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.news-actions {
+    display: flex;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    color: #2196f3;
+    background: rgba(33, 150, 243, 0.1);
+}
+
+.like-btn.liked {
+    color: #ff4757;
+}
+
+.like-btn.liked:hover {
+    background: rgba(255, 71, 87, 0.1);
+}
+
+.save-btn.saved {
+    color: #ffa502;
+}
+
+.save-btn.saved:hover {
+    background: rgba(255, 165, 2, 0.1);
+}
+
+/* ====== Trending Card Styles ====== */
+.trending-card {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 203, 243, 0.1));
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.trending-card:hover {
+    transform: translateY(-5px);
+    border-color: #2196f3;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.trending-rank {
+    font-size: 32px;
+    font-weight: 800;
+    color: #2196f3;
+    min-width: 60px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.trending-content {
+    flex: 1;
+    min-width: 0; /* Fix flex overflow */
+}
+
+.trending-content h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.trending-content p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 3em;
+}
+
+.trending-stats {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.trending-stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+    font-size: 13px;
+}
+
+.trending-stat i {
+    color: #2196f3;
+}
+
+/* ====== Saved Card Styles ====== */
+.saved-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.saved-card:hover {
+    transform: translateY(-5px);
+    border-color: #ffa502;
+    box-shadow: 0 15px 40px rgba(255, 165, 2, 0.15);
+}
+
+.saved-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.saved-category {
+    padding: 5px 15px;
+    background: rgba(255, 165, 2, 0.1);
+    color: #ffa502;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.remove-saved {
+    background: none;
+    border: none;
+    color: #ff4757;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.remove-saved:hover {
+    background: rgba(255, 71, 87, 0.1);
+}
+
+.saved-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 2.8em;
+}
+
+.saved-excerpt {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    max-height: 4.5em;
+}
+
+.saved-date {
+    color: #888;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: auto;
+}
+
+/* ====== Skeleton Loading ====== */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite linear;
+    border-radius: 4px;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-card {
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+}
+
+.skeleton-image {
+    height: 200px;
+    width: 100%;
+    background: #e0e0e0;
+}
+
+.skeleton-content {
+    padding: 25px;
+}
+
+.skeleton-line {
+    height: 20px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    background: #e0e0e0;
+}
+
+.skeleton-line.short {
+    width: 40%;
+}
+
+.skeleton-line.medium {
+    width: 70%;
+}
+
+.skeleton-line.long {
+    width: 100%;
+}
+
+.skeleton-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.skeleton-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e0e0e0;
+}
+
+/* ====== Empty State ====== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.empty-state i {
+    font-size: 60px;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-size: 24px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #888;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.empty-state .btn-primary {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #2196f3, #21cbf3);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.empty-state .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+/* ====== Notification Badge ====== */
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4757;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    box-sizing: border-box;
+}
+
+/* ====== Read Indicator ====== */
+.read-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 10px;
+    height: 10px;
+    background: #4caf50;
+    border-radius: 50%;
+    animation: pulse 2s infinite ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ====== Premium Badge ====== */
+.premium-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 10px;
+    background: linear-gradient(135deg, #ffd700, #ffa500);
+    color: #333;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 2;
+}
+
+/* ====== Utility Classes ====== */
+.hidden {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+/* ====== Responsive Fixes ====== */
+@media (max-width: 768px) {
+    .news-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .news-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .trending-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .trending-rank {
+        margin-bottom: 10px;
+    }
+    
+    .saved-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .news-actions {
+        justify-content: space-around;
+    }
+    
+    .action-btn {
+        padding: 6px;
+    }
+}
